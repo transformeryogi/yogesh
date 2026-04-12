@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --rose:        #f7a8c4;
+      --rose-dark:   #e8729a;
+      --blush:       #fce4ec;
+      --lavender:    #e8d5f5;
+      --lilac:       #c9a8e0;
+      --cream:       #fff8f0;
+      --gold:        #d4a5a5;
+      --text-dark:   #4a2040;
+      --text-mid:    #7a4060;
+      --text-soft:   #b07090;
+      --shadow:      rgba(200, 100, 140, 0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--blush); }
+    ::-webkit-scrollbar-thumb { background: var(--rose-dark); border-radius: 10px; }
+
+    @keyframes fadeUp   { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+    @keyframes pulse    { 0%,100%{transform:scale(1);} 50%{transform:scale(1.08);} }
+    @keyframes floatHeart { 0%{transform:translateY(0) rotate(0deg) scale(1);opacity:1;} 100%{transform:translateY(-100vh) rotate(45deg) scale(0.4);opacity:0;} }
+    @keyframes shimmer  { 0%,100%{background-position:0% 50%;} 50%{background-position:100% 50%;} }
+    @keyframes sparkle  { 0%,100%{opacity:0;transform:scale(0);} 50%{opacity:1;transform:scale(1);} }
+    @keyframes petal    { 0%{transform:translateY(-20px) rotate(0deg);opacity:0;} 10%{opacity:1;} 100%{transform:translateY(110vh) rotate(720deg);opacity:0;} }
+    @keyframes glow     { 0%,100%{box-shadow:0 0 20px rgba(247,168,196,0.4);} 50%{box-shadow:0 0 50px rgba(247,168,196,0.9);} }
+    @keyframes wave     { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+    @keyframes bounce   { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+    @keyframes popIn    { 0%{transform:scale(0) rotate(-20deg);opacity:0;} 70%{transform:scale(1.2) rotate(5deg);} 100%{transform:scale(1) rotate(0deg);opacity:1;} }
+    @keyframes fallDown { 0%{top:-60px;opacity:1;transform:rotate(0deg) scale(1);} 100%{top:110%;opacity:0.3;transform:rotate(360deg) scale(0.6);} }
+    @keyframes caught   { 0%{transform:scale(1);opacity:1;} 50%{transform:scale(2.5);opacity:0.8;} 100%{transform:scale(0);opacity:0;} }
+    @keyframes scoreFloat { 0%{opacity:1;transform:translateY(0);} 100%{opacity:0;transform:translateY(-60px);} }
+    @keyframes starBurst { 0%{transform:scale(0);opacity:1;} 100%{transform:scale(3);opacity:0;} }
+
+    .fade-up { animation: fadeUp 0.9s ease both; }
+    .fade-in { animation: fadeIn 1.2s ease both; }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* NAV DOTS */
+    #nav-dots {
+      position: fixed; right: 20px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 12px; z-index: 1000;
+    }
+    .nav-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--rose); opacity: 0.4; cursor: pointer; transition: all 0.3s;
+    }
+    .nav-dot.active { opacity: 1; background: var(--rose-dark); transform: scale(1.4); }
+
+    /* LANDING */
+    #landing {
+      background: linear-gradient(135deg, #fce4ec 0%, #e8d5f5 40%, #fce4ec 80%, #fff0f5 100%);
+      background-size: 300% 300%;
+      animation: shimmer 8s ease infinite;
+      text-align: center;
+    }
+    .petal-bg {
+      position: absolute; top: -20px; font-size: 1.5rem;
+      animation: petal linear infinite; pointer-events: none; z-index: 0;
+    }
+    #landing .content { position: relative; z-index: 1; }
+    .name-badge {
+      display: inline-block;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--rose-dark), var(--lilac), var(--rose-dark));
+      background-size: 200% 200%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: shimmer 4s ease infinite, fadeUp 1s ease both;
+      line-height: 1.1;
+    }
+    .landing-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(1.1rem, 3vw, 1.6rem); color: var(--text-mid);
+      margin: 18px 0 40px; animation: fadeUp 1s 0.3s ease both;
+      font-weight: 300; letter-spacing: 0.5px;
+    }
+    .btn-surprise {
+      display: inline-block; padding: 16px 44px;
+      background: linear-gradient(135deg, var(--rose-dark), var(--lilac));
+      color: #fff; font-family: 'Lato', sans-serif; font-size: 1rem;
+      letter-spacing: 2px; text-transform: uppercase; border: none;
+      border-radius: 50px; cursor: pointer; text-decoration: none;
+      animation: fadeUp 1s 0.6s ease both, glow 3s 1.6s ease infinite;
+      transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+    }
+    .btn-surprise::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-100%) skewX(-15deg); transition: transform 0.5s;
+    }
+    .btn-surprise:hover::before { transform: translateX(150%) skewX(-15deg); }
+    .btn-surprise:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 15px 40px rgba(232,114,154,0.4); }
+    .sparkle {
+      position: absolute; width: 8px; height: 8px;
+      background: var(--rose); border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite; pointer-events: none;
+    }
+
+    /* SURPRISE */
+    #surprise { background: linear-gradient(160deg, #fff0f8 0%, #f3e8ff 100%); text-align: center; }
+    #hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 500; overflow: hidden; }
+    .heart-float {
+      position: absolute; bottom: -60px; font-size: 1.4rem;
+      animation: floatHeart linear forwards; pointer-events: none;
+    }
+    .typewriter-wrapper { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .section-tag {
+      font-family: 'Lato', sans-serif; font-size: 0.75rem;
+      letter-spacing: 4px; text-transform: uppercase;
+      color: var(--rose-dark); margin-bottom: 20px; opacity: 0.8;
+    }
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem); color: var(--text-dark); margin-bottom: 30px;
+    }
+    #typewriter-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--text-mid);
+      line-height: 1.9; font-weight: 300; min-height: 6em;
+    }
+    .cursor { display: inline-block; width: 2px; height: 1.2em; background: var(--rose-dark); animation: pulse 0.8s infinite; vertical-align: middle; margin-left: 2px; }
+
+    /* LETTER */
+    #letter { background: linear-gradient(135deg, #f3e8ff 0%, #fce4ec 100%); }
+    .letter-card {
+      background: #fffbf5; max-width: 680px; width: 100%;
+      border-radius: 24px; padding: 50px 50px 40px;
+      box-shadow: 0 20px 60px var(--shadow), inset 0 0 0 1px rgba(247,168,196,0.3);
+      position: relative; margin-top: 30px;
+    }
+    .letter-card::before {
+      content: '❝'; font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem; color: var(--rose); opacity: 0.15;
+      position: absolute; top: 10px; left: 20px; line-height: 1;
+    }
+    .letter-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-mid);
+      line-height: 2; font-style: italic; position: relative; z-index: 1;
+    }
+    .letter-signature { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--rose-dark); margin-top: 30px; text-align: right; }
+    .letter-deco { position: absolute; font-size: 1.2rem; opacity: 0.4; }
+    .letter-deco.tl { top: 16px; right: 20px; }
+    .letter-deco.br { bottom: 16px; left: 20px; }
+
+    /* =============================================
+       GAME SECTION
+    ============================================= */
+    #game {
+      background: linear-gradient(135deg, #fff0f8 0%, #ede0ff 50%, #fce4ec 100%);
+      background-size: 300% 300%;
+      animation: shimmer 10s ease infinite;
+      padding: 60px 20px;
+      min-height: 100vh;
+    }
+    .game-wrapper {
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+    }
+    #game-arena {
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+      height: 420px;
+      margin: 28px auto 0;
+      background: rgba(255,255,255,0.55);
+      border-radius: 28px;
+      border: 2px solid rgba(247,168,196,0.5);
+      overflow: hidden;
+      cursor: none;
+      box-shadow: 0 12px 50px rgba(200,100,140,0.18);
+      backdrop-filter: blur(8px);
+      touch-action: none;
+    }
+    #game-arena.inactive { cursor: default; }
+
+    /* falling item */
+    .fall-item {
+      position: absolute;
+      font-size: 2rem;
+      line-height: 1;
+      top: -60px;
+      animation: fallDown linear forwards;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.05s;
+      z-index: 10;
+    }
+    .fall-item.caught { animation: caught 0.35s ease forwards !important; pointer-events: none; }
+
+    /* basket */
+    #basket {
+      position: absolute;
+      bottom: 14px;
+      width: 80px;
+      height: 50px;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 20;
+      transition: left 0.05s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #basket-emoji { font-size: 2.4rem; line-height: 1; filter: drop-shadow(0 4px 8px rgba(200,100,140,0.4)); }
+
+    /* score float */
+    .score-float {
+      position: absolute;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: var(--rose-dark);
+      pointer-events: none;
+      animation: scoreFloat 0.9s ease forwards;
+      z-index: 30;
+      font-weight: 700;
+    }
+
+    /* HUD */
+    .game-hud {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 16px 0 0;
+      flex-wrap: wrap;
+    }
+    .hud-pill {
+      background: rgba(255,255,255,0.8);
+      border: 1.5px solid rgba(247,168,196,0.5);
+      border-radius: 40px;
+      padding: 8px 22px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(6px);
+    }
+    .hud-pill span { font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: var(--rose-dark); font-weight: 700; }
+
+    /* game overlay screens */
+    .game-screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 240, 248, 0.92);
+      backdrop-filter: blur(6px);
+      z-index: 50;
+      border-radius: 26px;
+      padding: 24px;
+      text-align: center;
+    }
+    .game-screen.hidden { display: none; }
+    .game-screen-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+    .game-screen-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 340px;
+    }
+    .game-screen-score {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.4rem;
+      color: var(--rose-dark);
+      margin-bottom: 6px;
+    }
+    .btn-game {
+      padding: 13px 38px;
+      background: linear-gradient(135deg, var(--rose-dark), var(--lilac));
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 20px rgba(232,114,154,0.35);
+    }
+    .btn-game:hover { transform: scale(1.06) translateY(-2px); box-shadow: 0 12px 30px rgba(232,114,154,0.5); }
+
+    .game-instructions {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--text-soft);
+      font-style: italic;
+      margin-top: 14px;
+    }
+
+    /* stars burst on level up */
+    .star-burst {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: starBurst 0.6s ease forwards;
+      z-index: 40;
+    }
+
+    /* MUSIC BAR */
+    #music-bar {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(247,168,196,0.4);
+      border-radius: 60px; padding: 10px 24px;
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: 0 8px 30px var(--shadow);
+      z-index: 900; min-width: 220px;
+      animation: fadeUp 1s 1s ease both;
+    }
+    #music-bar .music-icon { font-size: 1.2rem; animation: bounce 2s ease infinite; }
+    #music-bar .music-label { font-size: 0.78rem; color: var(--text-mid); letter-spacing: 1px; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; }
+    #play-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose-dark), var(--lilac));
+      border: none; color: #fff; font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.2s, box-shadow 0.2s; flex-shrink: 0;
+    }
+    #play-btn:hover { transform: scale(1.12); box-shadow: 0 4px 16px rgba(232,114,154,0.5); }
+    .music-wave { display: flex; align-items: center; gap: 3px; height: 20px; }
+    .music-wave span {
+      display: inline-block; width: 3px; height: 100%;
+      background: var(--rose); border-radius: 3px;
+      animation: wave 0.8s ease-in-out infinite;
+    }
+    .music-wave span:nth-child(2) { animation-delay: 0.15s; height: 60%; }
+    .music-wave span:nth-child(3) { animation-delay: 0.3s; height: 40%; }
+    .music-wave span:nth-child(4) { animation-delay: 0.45s; height: 80%; }
+    .music-wave span:nth-child(5) { animation-delay: 0.6s; height: 55%; }
+    .music-wave.paused span { animation-play-state: paused; }
+
+    /* FINAL */
+    #final { background: linear-gradient(160deg, #fff0f8 0%, #ede0ff 60%, #fce4ec 100%); text-align: center; }
+    .btn-final {
+      margin-top: 30px; padding: 18px 52px;
+      background: linear-gradient(135deg, var(--lilac), var(--rose-dark), var(--lilac));
+      background-size: 200% 200%; animation: shimmer 4s ease infinite;
+      color: #fff; font-family: 'Lato', sans-serif; font-size: 1rem;
+      letter-spacing: 2px; text-transform: uppercase; border: none;
+      border-radius: 60px; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 8px 30px rgba(201,168,224,0.5);
+    }
+    .btn-final:hover { transform: scale(1.06) translateY(-3px); box-shadow: 0 18px 50px rgba(201,168,224,0.7); }
+
+    /* MODAL */
+    #modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(74,32,64,0.55); backdrop-filter: blur(6px);
+      z-index: 2000; display: none;
+      align-items: center; justify-content: center; animation: fadeIn 0.4s ease;
+    }
+    #modal-overlay.open { display: flex; }
+    .modal-box {
+      background: linear-gradient(135deg, #fff0f8, #ede0ff);
+      border-radius: 28px; padding: 60px 50px; max-width: 480px;
+      width: 90%; text-align: center; position: relative;
+      box-shadow: 0 30px 80px rgba(130,60,100,0.35); animation: fadeUp 0.5s ease;
+    }
+    .modal-emoji { font-size: 4rem; animation: bounce 1.5s ease infinite; }
+    .modal-title { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--text-dark); margin: 16px 0 10px; }
+    .modal-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; color: var(--text-mid); line-height: 1.7; }
+    .modal-close {
+      margin-top: 30px; padding: 12px 36px;
+      background: linear-gradient(135deg, var(--rose-dark), var(--lilac));
+      color: #fff; border: none; border-radius: 50px; cursor: pointer;
+      font-size: 0.9rem; letter-spacing: 1px; transition: transform 0.2s;
+    }
+    .modal-close:hover { transform: scale(1.05); }
+    .modal-hearts { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 28px; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .divider { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--rose-dark), transparent); margin: 16px auto 0; border-radius: 2px; }
+
+    @media (max-width: 600px) {
+      .letter-card { padding: 36px 24px; }
+      #nav-dots { display: none; }
+      .modal-box { padding: 40px 24px; }
+      #game-arena { height: 360px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="hearts-container"></div>
+
+  <!-- NAV DOTS -->
+  <nav id="nav-dots">
+    <div class="nav-dot active" data-target="landing" title="Home"></div>
+    <div class="nav-dot" data-target="surprise" title="Surprise"></div>
+    <div class="nav-dot" data-target="letter" title="Letter"></div>
+    <div class="nav-dot" data-target="game" title="Game"></div>
+    <div class="nav-dot" data-target="final" title="Final Surprise"></div>
+  </nav>
+
+  <!-- MUSIC BAR -->
+  <div id="music-bar">
+    <span class="music-icon">🎵</span>
+    <span class="music-label" id="music-label">Playing for you...</span>
+    <div class="music-wave" id="music-wave">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <button id="play-btn" title="Play / Pause">▶</button>
+  </div>
+
+  <!-- Hidden YouTube IFrame API player -->
+  <div id="yt-player-container" style="position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-1;">
+    <div id="yt-player"></div>
+  </div>
+
+  <!-- ======== SECTION 1 — LANDING ======== -->
+  <section id="landing">
+    <div class="content">
+      <div class="name-badge">Happy Birthday<br/>Jeya Chitra ❤️</div>
+      <p class="landing-sub">Every moment is brighter because you exist in it.</p>
+      <a href="#surprise" class="btn-surprise">✨ Click for Surprise</a>
+    </div>
+    <div class="sparkle" style="top:15%;left:10%;animation-delay:0s;"></div>
+    <div class="sparkle" style="top:25%;right:12%;animation-delay:0.5s;background:var(--lilac);"></div>
+    <div class="sparkle" style="bottom:20%;left:18%;animation-delay:1s;background:var(--lavender);"></div>
+    <div class="sparkle" style="bottom:30%;right:8%;animation-delay:1.5s;"></div>
+    <div class="sparkle" style="top:50%;left:5%;animation-delay:0.8s;background:var(--lilac);"></div>
+  </section>
+
+  <!-- ======== SECTION 2 — SURPRISE ======== -->
+  <section id="surprise">
+    <div class="typewriter-wrapper reveal">
+      <p class="section-tag">— a little surprise —</p>
+      <h2 class="section-title">A Message From the Heart 💌</h2>
+      <div class="divider"></div>
+      <br/>
+      <p id="typewriter-text"><span class="cursor"></span></p>
+    </div>
+  </section>
+
+  <!-- ======== SECTION 3 — LETTER ======== -->
+  <section id="letter">
+    <div class="reveal" style="text-align:center;">
+      <p class="section-tag">— written for you —</p>
+      <h2 class="section-title">A Letter Just for You 💐</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="letter-card reveal">
+      <span class="letter-deco tl">🌸🌸</span>
+      <span class="letter-deco br">💕💕</span>
+      <p class="letter-body">
+        My dearest Jeya Chitra,<br/><br/>
+        There are so many words that come to mind when I think of you — warmth, kindness, laughter, and a quiet strength that makes everything around you feel softer.
+        The way you smile can turn an ordinary day into something worth remembering. The way you care, always without asking for anything in return, is one of the most beautiful things I have ever seen.<br/><br/>
+        On this special day, I want you to know that your presence in this world is not just noticed — it is deeply, genuinely treasured. You bring colour to the spaces you walk into and calm to the people who are lucky enough to know you.<br/><br/>
+        May this year carry you gently, surprise you joyfully, and remind you, again and again, just how extraordinary you truly are. You deserve all the happiness that life has to offer — and then some.<br/><br/>
+        Happy Birthday, lovely. Here's to you — always. 🌷
+      </p>
+      <div class="letter-signature">With all my heart ❤️</div>
+    </div>
+  </section>
+
+  <!-- ======== SECTION 4 — GAME ======== -->
+  <section id="game">
+    <div class="game-wrapper reveal">
+      <p class="section-tag">— just for you —</p>
+      <h2 class="section-title">Catch the Birthday Hearts 🎮</h2>
+      <div class="divider"></div>
+      <p class="game-instructions">Move your mouse (or finger) to catch the falling hearts with the basket!</p>
+
+      <!-- HUD -->
+      <div class="game-hud">
+        <div class="hud-pill">❤️ Score <span id="score-display">0</span></div>
+        <div class="hud-pill">⏱ Time <span id="timer-display">30</span>s</div>
+        <div class="hud-pill">🎯 Level <span id="level-display">1</span></div>
+      </div>
+
+      <!-- Arena -->
+      <div id="game-arena" class="inactive">
+        <!-- Basket -->
+        <div id="basket">
+          <div id="basket-emoji">🧺</div>
+        </div>
+
+        <!-- Start screen -->
+        <div class="game-screen" id="screen-start">
+          <div style="font-size:3rem;margin-bottom:10px;animation:bounce 1.5s infinite;">🎂</div>
+          <div class="game-screen-title">Birthday Game!</div>
+          <p class="game-screen-sub">Catch as many hearts as you can in 30 seconds.<br/>Move your cursor (or finger on mobile) to guide the basket!</p>
+          <button class="btn-game" id="btn-start">▶ Start Game</button>
+        </div>
+
+        <!-- Over screen -->
+        <div class="game-screen hidden" id="screen-over">
+          <div style="font-size:3rem;margin-bottom:8px;">🎉</div>
+          <div class="game-screen-title">Time's Up!</div>
+          <div class="game-screen-score" id="final-score-display">Score: 0</div>
+          <p class="game-screen-sub" id="game-over-msg">You did amazing!</p>
+          <button class="btn-game" id="btn-restart">↻ Play Again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== SECTION 5 — FINAL ======== -->
+  <section id="final">
+    <div class="reveal" style="text-align:center;">
+      <p class="section-tag">— one last thing —</p>
+      <h2 class="section-title">One More Surprise Awaits 🎁</h2>
+      <div class="divider"></div>
+      <p style="margin-top:20px; font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--text-mid); font-style:italic;">
+        Are you ready? Something sweet is waiting for you…
+      </p>
+      <button class="btn-final" id="open-modal-btn">🎀 Open Final Surprise</button>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <div id="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-hearts" id="modal-hearts"></div>
+      <div class="modal-emoji">💖</div>
+      <div class="modal-title">You Are Special to Me</div>
+      <p class="modal-sub">
+        I like you — not just on your birthday,<br/>
+        but every single ordinary day too.<br/>
+        You are my favourite kind of magic. ✨
+      </p>
+      <br/>
+      <p style="font-family:'Dancing Script',cursive; font-size:1.6rem; color:var(--rose-dark);">Happy Birthday, Jeya Chitra 🎂❤️</p>
+      <br/>
+      <button class="modal-close" id="close-modal-btn">Close ✕</button>
+    </div>
+  </div>
+
+  <!-- YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const rand = (min, max) => Math.random() * (max - min) + min;
+
+    /* ===== PETALS ===== */
+    const landingSec = $('landing');
+    const petalEmojis = ['🌸','🌺','🌷','🌹','💮'];
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal-bg';
+      p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+      p.style.left = rand(0, 100) + '%';
+      p.style.fontSize = rand(0.8, 2.2) + 'rem';
+      p.style.animationDuration = rand(6, 14) + 's';
+      p.style.animationDelay = rand(0, 8) + 's';
+      p.style.opacity = rand(0.25, 0.6);
+      landingSec.appendChild(p);
+    }
+
+    /* ===== TYPEWRITER ===== */
+    const message = [
+      "Today the universe pauses, just for a moment, to celebrate something truly wonderful — you.",
+      "\n\nYou light up the world in ways you don't even realise.",
+      " Your laughter is contagious, your heart is gold, and your spirit is irreplaceable.",
+      "\n\nOn this beautiful day, may every wish you've ever whispered to the stars come true.",
+      " You deserve the kind of happiness that stays — warm, quiet, and forever. 🌸",
+      "\n\nHappy Birthday. The world is a better place with you in it. 💕"
+    ].join('');
+    let charIndex = 0;
+    const typeEl = $('typewriter-text');
+    function typeWriter() {
+      if (charIndex < message.length) {
+        const ch = message[charIndex];
+        if (ch === '\n') typeEl.innerHTML += '<br/>';
+        else typeEl.innerHTML += ch;
+        charIndex++;
+        setTimeout(typeWriter, charIndex === message.length ? 0 : rand(25, 60));
+      }
+    }
+
+    /* ===== FLOATING HEARTS ===== */
+    const heartsContainer = $('hearts-container');
+    const heartEmojis = ['❤️','💖','💗','💕','💝','🩷','💞'];
+    function launchHearts(duration = 6000) {
+      const interval = setInterval(() => {
+        const h = document.createElement('div');
+        h.className = 'heart-float';
+        h.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        h.style.left = rand(2, 96) + 'vw';
+        h.style.fontSize = rand(1, 2.5) + 'rem';
+        h.style.animationDuration = rand(3.5, 7) + 's';
+        h.style.animationDelay = rand(0, 0.8) + 's';
+        heartsContainer.appendChild(h);
+        setTimeout(() => h.remove(), 8000);
+      }, 200);
+      setTimeout(() => clearInterval(interval), duration);
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    const reveals = document.querySelectorAll('.reveal');
+    const sections = document.querySelectorAll('section');
+    const navDots = document.querySelectorAll('.nav-dot');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.closest('#surprise') && charIndex === 0) {
+            setTimeout(typeWriter, 600);
+            launchHearts(7000);
+          }
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navDots.forEach(dot => dot.classList.toggle('active', dot.dataset.target === id));
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(s => sectionObserver.observe(s));
+
+    navDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        document.getElementById(dot.dataset.target).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+
+ 
+    /* ===== AUDIO PLAYER ===== */
+let playing = false;
+
+const playBtn = $('play-btn');
+const musicWave = $('music-wave');
+const musicLabel = $('music-label');
+
+// Local MP3 file
+const audioSrc = './June-Pona.mp3'; 
+
+const bgAudio = new Audio(audioSrc);
+bgAudio.loop = true;
+bgAudio.volume = 0.75;
+
+bgAudio.addEventListener('canplay', () => {
+  musicLabel.textContent = '🎶 Playing for you...';
+});
+
+bgAudio.addEventListener('error', () => {
+  musicLabel.textContent = 'Audio not found ❌';
+});
+
+function setPlaying(state) {
+  playing = state;
+  playBtn.textContent = playing ? '⏸' : '▶';
+  musicWave.classList.toggle('paused', !playing);
+}
+
+playBtn.addEventListener('click', () => {
+  if (playing) {
+    bgAudio.pause();
+    setPlaying(false);
+  } else {
+    bgAudio.play()
+      .then(() => setPlaying(true))
+      .catch(() => {
+        musicLabel.textContent = 'Click again to play';
+      });
+  }
+});
+
+// Auto-play on first interaction
+document.addEventListener('click', function autoPlay() {
+  if (!playing) {
+    bgAudio.play().then(() => setPlaying(true)).catch(() => {});
+  }
+  document.removeEventListener('click', autoPlay);
+}, { once: true });
+
+    /* ===== SMOOTH SCROLL ===== */
+    document.querySelector('.btn-surprise').addEventListener('click', e => {
+      e.preventDefault();
+      $('surprise').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    /* ===== MODAL ===== */
+    const modalOverlay = $('modal-overlay');
+    const modalHearts = $('modal-hearts');
+
+    $('open-modal-btn').addEventListener('click', () => {
+      modalOverlay.classList.add('open');
+      for (let i = 0; i < 12; i++) {
+        const h = document.createElement('div');
+        h.textContent = ['💖','💗','💕','❤️'][Math.floor(Math.random()*4)];
+        h.style.cssText = `position:absolute;bottom:${rand(-10,0)}%;left:${rand(5,90)}%;font-size:${rand(0.9,1.8)}rem;animation:floatHeart ${rand(2,4)}s linear ${rand(0,1)}s forwards;pointer-events:none;`;
+        modalHearts.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }
+      launchHearts(5000);
+    });
+
+    $('close-modal-btn').addEventListener('click', () => modalOverlay.classList.remove('open'));
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) modalOverlay.classList.remove('open'); });
+
+    /* =============================================
+       HEART CATCH GAME
+    ============================================= */
+    const arena = $('game-arena');
+    const basket = $('basket');
+    const scoreDisplay = $('score-display');
+    const timerDisplay = $('timer-display');
+    const levelDisplay = $('level-display');
+    const screenStart = $('screen-start');
+    const screenOver = $('screen-over');
+    const finalScoreDisplay = $('final-score-display');
+    const gameOverMsg = $('game-over-msg');
+
+    const FALL_ITEMS = {
+      good:  ['❤️','💖','💗','💕','💝','🩷','💞','🎂','🎁','🌸'],
+      bad:   ['💣','⚡','🌧️']  // avoid these — lose points
+    };
+
+    let score = 0;
+    let timeLeft = 30;
+    let level = 1;
+    let gameRunning = false;
+    let timerInterval = null;
+    let spawnInterval = null;
+    let basketX = 50; // percent
+    let arenaRect = null;
+
+    const msgs = [
+      "You caught so many hearts! 💖",
+      "You're a heart-catching superstar! 🌟",
+      "All those hearts belong to you! 🎀",
+      "Love overflows from your basket! 💕",
+      "Every heart caught = a wish for you! ✨"
+    ];
+
+    function updateHUD() {
+      scoreDisplay.textContent = score;
+      timerDisplay.textContent = timeLeft;
+      levelDisplay.textContent = level;
+    }
+
+    function moveBasket(xPercent) {
+      const clamped = Math.min(Math.max(xPercent, 5), 95);
+      basketX = clamped;
+      basket.style.left = clamped + '%';
+    }
+
+    // Mouse
+    arena.addEventListener('mousemove', e => {
+      if (!gameRunning) return;
+      arenaRect = arena.getBoundingClientRect();
+      const xPercent = ((e.clientX - arenaRect.left) / arenaRect.width) * 100;
+      moveBasket(xPercent);
+    });
+
+    // Touch
+    arena.addEventListener('touchmove', e => {
+      if (!gameRunning) return;
+      e.preventDefault();
+      arenaRect = arena.getBoundingClientRect();
+      const touch = e.touches[0];
+      const xPercent = ((touch.clientX - arenaRect.left) / arenaRect.width) * 100;
+      moveBasket(xPercent);
+    }, { passive: false });
+
+    function spawnItem() {
+      const isGood = Math.random() > 0.15;
+      const pool = isGood ? FALL_ITEMS.good : FALL_ITEMS.bad;
+      const emoji = pool[Math.floor(Math.random() * pool.length)];
+      const xPct = rand(5, 90);
+      const duration = rand(1.8, 3.8) - (level - 1) * 0.25; // faster each level
+      const clampedDur = Math.max(0.9, duration);
+
+      const item = document.createElement('div');
+      item.className = 'fall-item';
+      item.textContent = emoji;
+      item.style.left = xPct + '%';
+      item.style.animationDuration = clampedDur + 's';
+      item.dataset.good = isGood ? '1' : '0';
+      item.dataset.xpct = xPct;
+      arena.appendChild(item);
+
+      // Check catch by proximity every 50ms
+      const checkInterval = setInterval(() => {
+        if (!gameRunning) { clearInterval(checkInterval); item.remove(); return; }
+        const itemRect = item.getBoundingClientRect();
+        const basketRect = basket.getBoundingClientRect();
+        if (!itemRect || !basketRect) return;
+
+        const itemCenterX = itemRect.left + itemRect.width / 2;
+        const itemCenterY = itemRect.top + itemRect.height / 2;
+        const basketCenterX = basketRect.left + basketRect.width / 2;
+        const basketTop = basketRect.top;
+        const basketBottom = basketRect.bottom;
+
+        const withinX = Math.abs(itemCenterX - basketCenterX) < basketRect.width * 0.7;
+        const withinY = itemCenterY > basketTop - 10 && itemCenterY < basketBottom + 10;
+
+        if (withinX && withinY) {
+          clearInterval(checkInterval);
+          catchItem(item, isGood, xPct);
+        }
+      }, 40);
+
+      // Remove after animation ends
+      setTimeout(() => {
+        clearInterval(checkInterval);
+        if (item.parentNode) item.remove();
+      }, (clampedDur + 0.5) * 1000);
+    }
+
+    function catchItem(item, isGood, xPct) {
+      item.classList.add('caught');
+
+      const pts = isGood ? (level === 1 ? 1 : level) : -2;
+      score = Math.max(0, score + pts);
+      updateHUD();
+
+      // Score float
+      const sf = document.createElement('div');
+      sf.className = 'score-float';
+      sf.textContent = pts > 0 ? `+${pts}` : `${pts}`;
+      sf.style.color = pts > 0 ? 'var(--rose-dark)' : '#c0392b';
+      sf.style.left = xPct + '%';
+      sf.style.top = '60%';
+      arena.appendChild(sf);
+      setTimeout(() => sf.remove(), 1000);
+
+      setTimeout(() => { if (item.parentNode) item.remove(); }, 400);
+
+      // Level up every 10 points
+      const newLevel = Math.floor(score / 10) + 1;
+      if (newLevel > level && newLevel <= 5) {
+        level = newLevel;
+        levelDisplay.textContent = level;
+        triggerLevelUp();
+      }
+    }
+
+    function triggerLevelUp() {
+      launchHearts(2000);
+      for (let i = 0; i < 6; i++) {
+        const star = document.createElement('div');
+        star.className = 'star-burst';
+        star.textContent = ['⭐','✨','🌟'][Math.floor(Math.random()*3)];
+        star.style.left = rand(10, 80) + '%';
+        star.style.top = rand(20, 70) + '%';
+        star.style.animationDelay = rand(0, 0.3) + 's';
+        arena.appendChild(star);
+        setTimeout(() => star.remove(), 700);
+      }
+    }
+
+    function startGame() {
+      score = 0; timeLeft = 30; level = 1; gameRunning = true;
+      updateHUD();
+      screenStart.classList.add('hidden');
+      screenOver.classList.add('hidden');
+      arena.classList.remove('inactive');
+      moveBasket(50);
+      arenaRect = arena.getBoundingClientRect();
+
+      const spawnRate = () => Math.max(400, 900 - (level - 1) * 80);
+
+      // Spawn loop — adapts to level
+      let spawnTimeout;
+      function scheduleSpawn() {
+        if (!gameRunning) return;
+        spawnItem();
+        spawnTimeout = setTimeout(scheduleSpawn, spawnRate());
+      }
+      scheduleSpawn();
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = timeLeft;
+        if (timeLeft <= 0) endGame();
+      }, 1000);
+
+      // Store refs for cleanup
+      arena._spawnTimeout = spawnTimeout;
+      arena._spawnSchedule = scheduleSpawn;
+    }
+
+    function endGame() {
+      gameRunning = false;
+      clearInterval(timerInterval);
+      arena.classList.add('inactive');
+      finalScoreDisplay.textContent = `Score: ${score}`;
+      gameOverMsg.textContent = score >= 20 ? msgs[Math.floor(Math.random()*msgs.length)] : score >= 10 ? "Great job! 💕 Play again?" : "Give it another go! You've got this 🌸";
+      screenOver.classList.remove('hidden');
+      launchHearts(3000);
+    }
+
+    $('btn-start').addEventListener('click', startGame);
+    $('btn-restart').addEventListener('click', startGame);
+
+  </script>
+</body>
+</html>
